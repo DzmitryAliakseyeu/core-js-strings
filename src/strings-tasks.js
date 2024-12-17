@@ -501,6 +501,7 @@ function extractEmails(str) {
  * @param {string} str - The input string.
  * @return {string} - The ROT13 encoded string.
  *
+ *
  * @example
  *
  *   'hello' => 'uryyb'
@@ -510,8 +511,27 @@ function extractEmails(str) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const arr = str
+    .split('')
+    .map((letter) => {
+      const letterCode = +letter.charCodeAt();
+      if (
+        (letterCode >= 65 && letterCode <= 77) ||
+        (letterCode >= 97 && letterCode <= 109)
+      ) {
+        return letterCode + 13;
+      }
+      if (
+        (letterCode >= 78 && letterCode <= 90) ||
+        (letterCode >= 110 && letterCode <= 122)
+      ) {
+        return letterCode - 13;
+      }
+      return letterCode;
+    })
+    .map((code) => String.fromCharCode(code));
+  return arr.join('');
 }
 
 /**
